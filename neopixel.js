@@ -311,7 +311,12 @@ function bin_to_json(bin) {
 
 let socket = undefined;
 function new_websocket() {
-    socket = new WebSocket("ws://localhost:9002");
+    if (location.hostname == "") {
+	socket = new WebSocket("ws://localhost:9002");
+    } else {
+	socket = new WebSocket(`ws://${location.hostname}:9002`);
+    }
+
     socket.binaryType = "arraybuffer";
 
     socket.onopen = function(e) {
